@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Image, FlatList, Pressable, StyleSheet, Alert, Linking } from 'react-native';
 import events from '../eventsData'; // Import the event data
-import EventModal from '../../components/EventModal'; // Import the EventModal component
+import EventModal from '../components/EventModal'; // Import the EventModal component
 
 const Index: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);

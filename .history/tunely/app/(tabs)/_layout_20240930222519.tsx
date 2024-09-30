@@ -8,7 +8,7 @@ export default function TabsLayout() {
         options={{
           headerTitle: 'Home',
           title: 'Home',
-          headerStyle: { backgroundColor: '#E37383' },
+          headerStyle: { backgroundColor: 'hotpink' },
           headerTintColor: 'white',
         }}
       />
@@ -17,7 +17,7 @@ export default function TabsLayout() {
         options={{
           headerTitle: 'Daily Events',
           title: 'Daily',
-          headerStyle: { backgroundColor: '#E37383' },
+          headerStyle: { backgroundColor: 'hotpink' },
           headerTintColor: 'white',
         }}
       />
@@ -26,7 +26,7 @@ export default function TabsLayout() {
         options={{
           headerTitle: 'Profile',
           title: 'Profile',
-          headerStyle: { backgroundColor: '#E37383' },
+          headerStyle: { backgroundColor: 'hotpink' },
           headerTintColor: 'white',
         }}
       />
