@@ -40,24 +40,10 @@ export default function TabsLayout() {
           headerTitle: '',
           // display an image in the header
           headerBackground: () => (
-            <View style={{ 
-              flex: 1, 
-              justifyContent: 'center', 
-              alignItems: 'center', 
-              backgroundColor: '#E37383', 
-              position: 'relative',
-              overflow: 'visible'
-            }}>
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#E37383' }}>
               <Image
                 source={require('../../assets/images/tunely-logo.png')}
-                style={{ 
-                  width: 90, 
-                  height: 50, 
-                  top: '55%', 
-                  left: '5%', 
-                  position: 'absolute', 
-                  //transform: [{ translateX: -50 }] 
-                }}
+                style={{ width: 50, height: 50 }}
               />
             </View>
           ),

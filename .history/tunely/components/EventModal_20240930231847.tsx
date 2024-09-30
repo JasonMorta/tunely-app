@@ -41,27 +41,27 @@ const EventModal: React.FC<EventModalProps> = ({ visible, event, onClose, onGetD
                   <Image source={{ uri: event.image }} style={styles.modalImage} />
 
                   {/* Display event details */}
-                
+                  <View style={styles.detailsContainer}>
                     <Text style={styles.modalTitle}>{event.artist_name}</Text>
                     <Text style={styles.modalSubtitle}>Date: {event.date}</Text>
                     <Text style={styles.modalSubtitle}>Time: {event.time}</Text>
                     <Text style={styles.modalSubtitle}>Venue: {event.venue}</Text>
                     <Text style={styles.modalSubtitle}>Location: {event.location}</Text>
                     <Text style={styles.modalDescription}>{event.description}</Text>
-             
 
-                  {/* Directions Button */}
-                  <TouchableOpacity
-                    style={styles.directionsButton}
-                    onPress={() => onGetDirections(event.location)}
-                  >
-                    <Text style={styles.buttonText}>Get Directions</Text>
-                  </TouchableOpacity>
+                    {/* Directions Button */}
+                    <TouchableOpacity
+                      style={styles.directionsButton}
+                      onPress={() => onGetDirections(event.location)}
+                    >
+                      <Text style={styles.buttonText}>Get Directions</Text>
+                    </TouchableOpacity>
 
-                  {/* Close Button */}
-                  <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-                    <Text style={styles.buttonText}>Close</Text>
-                  </TouchableOpacity>
+                    {/* Close Button */}
+                    <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+                      <Text style={styles.buttonText}>Close</Text>
+                    </TouchableOpacity>
+                  </View>
                 </>
               )}
             </View>
@@ -78,8 +78,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.0)', // Transparent dark background
-        // set modal shadow for both iOS and Android
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Transparent dark background
+    // set modal shadow for both iOS and Android
     // Android shadow
     elevation: 5,
     // iOS shadow
@@ -97,28 +97,17 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    // padding: 20,
-    alignItems: 'center',
+    overflow: 'hidden', // Ensures the image fills the top section properly
   },
   modalImage: {
     width: '100%',
-    height: "40%",
-
-
-    // borderRadius: 10,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    marginBottom: 20,
-    // Position the image settings
-    resizeMode: 'cover', 
-
+    height: '40%', // Takes 40% of the modal height
+    resizeMode: 'cover', // Ensures the image covers the entire area without distortion
   },
-  textContainer: {
+  detailsContainer: {
+    flex: 1,
     padding: 20,
-    width: '100%',
     alignItems: 'center',
-    display: 'flex',
-    flexDirection: 'column',
   },
   modalTitle: {
     fontSize: 24,

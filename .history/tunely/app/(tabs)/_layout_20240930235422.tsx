@@ -51,9 +51,9 @@ export default function TabsLayout() {
               <Image
                 source={require('../../assets/images/tunely-logo.png')}
                 style={{ 
-                  width: 90, 
+                  width: 100, 
                   height: 50, 
-                  top: '55%', 
+                  top: '50%', 
                   left: '5%', 
                   position: 'absolute', 
                   //transform: [{ translateX: -50 }] 

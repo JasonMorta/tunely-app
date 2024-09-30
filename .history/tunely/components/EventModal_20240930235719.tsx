@@ -41,14 +41,14 @@ const EventModal: React.FC<EventModalProps> = ({ visible, event, onClose, onGetD
                   <Image source={{ uri: event.image }} style={styles.modalImage} />
 
                   {/* Display event details */}
-                
+                  <Text style={styles.textContainer} >
                     <Text style={styles.modalTitle}>{event.artist_name}</Text>
                     <Text style={styles.modalSubtitle}>Date: {event.date}</Text>
                     <Text style={styles.modalSubtitle}>Time: {event.time}</Text>
                     <Text style={styles.modalSubtitle}>Venue: {event.venue}</Text>
                     <Text style={styles.modalSubtitle}>Location: {event.location}</Text>
                     <Text style={styles.modalDescription}>{event.description}</Text>
-             
+                  </Text>
 
                   {/* Directions Button */}
                   <TouchableOpacity
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   },
   modalImage: {
     width: '100%',
-    height: "40%",
+    height: "30%",
 
 
     // borderRadius: 10,
@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     // Position the image settings
     resizeMode: 'cover', 
+    bottom: 0,
 
   },
   textContainer: {

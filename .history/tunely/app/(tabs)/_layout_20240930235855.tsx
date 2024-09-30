@@ -53,7 +53,7 @@ export default function TabsLayout() {
                 style={{ 
                   width: 90, 
                   height: 50, 
-                  top: '55%', 
+                  top: '50%', 
                   left: '5%', 
                   position: 'absolute', 
                   //transform: [{ translateX: -50 }] 

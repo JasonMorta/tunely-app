@@ -41,14 +41,12 @@ const EventModal: React.FC<EventModalProps> = ({ visible, event, onClose, onGetD
                   <Image source={{ uri: event.image }} style={styles.modalImage} />
 
                   {/* Display event details */}
-                
-                    <Text style={styles.modalTitle}>{event.artist_name}</Text>
-                    <Text style={styles.modalSubtitle}>Date: {event.date}</Text>
-                    <Text style={styles.modalSubtitle}>Time: {event.time}</Text>
-                    <Text style={styles.modalSubtitle}>Venue: {event.venue}</Text>
-                    <Text style={styles.modalSubtitle}>Location: {event.location}</Text>
-                    <Text style={styles.modalDescription}>{event.description}</Text>
-             
+                  <Text style={styles.modalTitle}>{event.artist_name}</Text>
+                  <Text style={styles.modalSubtitle}>Date: {event.date}</Text>
+                  <Text style={styles.modalSubtitle}>Time: {event.time}</Text>
+                  <Text style={styles.modalSubtitle}>Venue: {event.venue}</Text>
+                  <Text style={styles.modalSubtitle}>Location: {event.location}</Text>
+                  <Text style={styles.modalDescription}>{event.description}</Text>
 
                   {/* Directions Button */}
                   <TouchableOpacity
@@ -97,28 +95,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    // padding: 20,
+    padding: 20,
     alignItems: 'center',
   },
   modalImage: {
     width: '100%',
-    height: "40%",
-
-
-    // borderRadius: 10,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
+    height: 200,
+    borderRadius: 10,
     marginBottom: 20,
-    // Position the image settings
-    resizeMode: 'cover', 
-
-  },
-  textContainer: {
-    padding: 20,
-    width: '100%',
-    alignItems: 'center',
-    display: 'flex',
-    flexDirection: 'column',
   },
   modalTitle: {
     fontSize: 24,

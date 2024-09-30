@@ -1,5 +1,5 @@
 import { Tabs } from 'expo-router';
-import { View, Image } from 'react-native';
+import { Image } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'; // Import Material Icons
 
 export default function TabsLayout() {
@@ -40,30 +40,15 @@ export default function TabsLayout() {
           headerTitle: '',
           // display an image in the header
           headerBackground: () => (
-            <View style={{ 
-              flex: 1, 
-              justifyContent: 'center', 
-              alignItems: 'center', 
-              backgroundColor: '#E37383', 
-              position: 'relative',
-              overflow: 'visible'
-            }}>
-              <Image
-                source={require('../../assets/images/tunely-logo.png')}
-                style={{ 
-                  width: 90, 
-                  height: 50, 
-                  top: '55%', 
-                  left: '5%', 
-                  position: 'absolute', 
-                  //transform: [{ translateX: -50 }] 
-                }}
-              />
-            </View>
+            <Image
+              source={require('../../assets/images/tunely-logo.png')}
+              style={{ width: '50%', height: '100%', backgroundColor: '#E37383'  }}
+            />
           ),
           title: 'Home',
           headerStyle: { 
-            backgroundColor: '#E37383', // Keep the background color of the header
+            backgroundColor: '#E37383',
+            
           },
           headerTintColor: 'white',
         }}

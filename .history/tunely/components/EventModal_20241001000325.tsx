@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   textContainer: {
     padding: 20,
     width: '100%',
-    alignItems: 'center',
+    alignItems: 'left',
     display: 'flex',
     flexDirection: 'column',
   },

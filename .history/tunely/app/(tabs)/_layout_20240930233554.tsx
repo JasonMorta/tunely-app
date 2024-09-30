@@ -1,6 +1,6 @@
 import { Tabs } from 'expo-router';
-import { View, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'; // Import Material Icons
+import { Image } from 'react-native'; // Import Image from React Native
 
 export default function TabsLayout() {
   return (
@@ -37,34 +37,14 @@ export default function TabsLayout() {
       <Tabs.Screen 
         name="index"
         options={{
-          headerTitle: '',
-          // display an image in the header
-          headerBackground: () => (
-            <View style={{ 
-              flex: 1, 
-              justifyContent: 'center', 
-              alignItems: 'center', 
-              backgroundColor: '#E37383', 
-              position: 'relative',
-              overflow: 'visible'
-            }}>
-              <Image
-                source={require('../../assets/images/tunely-logo.png')}
-                style={{ 
-                  width: 90, 
-                  height: 50, 
-                  top: '55%', 
-                  left: '5%', 
-                  position: 'absolute', 
-                  //transform: [{ translateX: -50 }] 
-                }}
-              />
-            </View>
+          header: () => (
+            <Image
+              source={{ uri: '../../assets/images/tunely-logo.png' }} // Replace with your image URL
+              style={{ width: 100, height: 50, alignSelf: 'center', marginTop: 10 }}
+            />
           ),
           title: 'Home',
-          headerStyle: { 
-            backgroundColor: '#E37383', // Keep the background color of the header
-          },
+          headerStyle: { backgroundColor: '#E37383' },
           headerTintColor: 'white',
         }}
       />
@@ -73,7 +53,12 @@ export default function TabsLayout() {
       <Tabs.Screen 
         name="daily"
         options={{
-          headerTitle: 'Daily Events',
+          header: () => (
+            <Image
+              source={{ uri: '../../assets/images/tunely-logo.png' }} // Replace with your image URL
+              style={{ width: 100, height: 50, alignSelf: 'center', marginTop: 10 }}
+            />
+          ),
           title: 'Daily',
           headerStyle: { backgroundColor: '#E37383' },
           headerTintColor: 'white',
@@ -84,7 +69,12 @@ export default function TabsLayout() {
       <Tabs.Screen 
         name="profile"
         options={{
-          headerTitle: 'Profile',
+          header: () => (
+            <Image
+              source={{ uri: '../../assets/images/tunely-logo.png' }} // Replace with your image URL
+              style={{ width: 100, height: 50, alignSelf: 'center', marginTop: 10 }}
+            />
+          ),
           title: 'Profile',
           headerStyle: { backgroundColor: '#E37383' },
           headerTintColor: 'white',
