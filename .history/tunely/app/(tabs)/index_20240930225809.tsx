@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, FlatList, Pressable, StyleSheet, Alert, Linking } from 'react-native';
-import { database } from '../../firebaseConfig'; // Import the Firebase config
+import { database } from '../firebaseConfig'; // Import the Firebase config
 import { ref, get } from "firebase/database"; // Firebase database methods
-import EventModal from '../../components/EventModal';
+import EventModal from '../components/EventModal';
 
 const Index: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -19,16 +19,9 @@ const Index: React.FC = () => {
 
         if (snapshot.exists()) {
           const eventsData = snapshot.val();
-          // Convert the snapshot data into an array of event objects
           const formattedEvents = Object.keys(eventsData).map((key) => ({
             id: key,
-            artist_name: eventsData[key].artist_name,
-            date: eventsData[key].date,
-            description: eventsData[key].description,
-            image: eventsData[key].image,
-            location: eventsData[key].location,
-            time: eventsData[key].time,
-            venue: eventsData[key].venue,
+            ...eventsData[key],
           }));
 
           setEvents(formattedEvents); // Set the fetched events into the state
@@ -57,53 +50,48 @@ const Index: React.FC = () => {
     setModalVisible(false);
   };
 
-// Function to check and offer navigation apps
-const handleGetDirections = async (location: string) => {
-  const googleMapsUrl = `comgooglemaps://?q=${location}`;
-  const appleMapsUrl = `maps:0,0?q=${location}`;
-  const browserGoogleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${location}`;
+  // Function to check and offer navigation apps
+  const handleGetDirections = async (latitude: number, longitude: number) => {
+    const googleMapsUrl = `comgooglemaps://?q=${latitude},${longitude}`;
+    const appleMapsUrl = `maps:0,0?q=${latitude},${longitude}`;
+    const browserGoogleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
 
-  const isGoogleMapsAvailable = await Linking.canOpenURL('comgooglemaps://');
+    const isGoogleMapsAvailable = await Linking.canOpenURL('comgooglemaps://');
 
-  // Show an alert with options to choose between Google Maps or Apple Maps
-  Alert.alert(
-    "Open Directions",
-    "Choose the app to open directions",
-    [
-      {
-        text: "Google Maps",
-        onPress: () => {
-          if (isGoogleMapsAvailable) {
-            Linking.openURL(googleMapsUrl); // Open in Google Maps if installed
-          } else {
-            Linking.openURL(browserGoogleMapsUrl); // Open in browser if Google Maps app is not installed
-          }
+    Alert.alert(
+      "Open Directions",
+      "Choose the app to open directions",
+      [
+        {
+          text: "Google Maps",
+          onPress: () => {
+            if (isGoogleMapsAvailable) {
+              Linking.openURL(googleMapsUrl); // Open in Google Maps if installed
+            } else {
+              Linking.openURL(browserGoogleMapsUrl); // Open in browser if Google Maps app is not installed
+            }
+          },
         },
-      },
-      {
-        text: "Apple Maps",
-        onPress: () => {
-          Linking.openURL(appleMapsUrl); // Open in Apple Maps
+        {
+          text: "Apple Maps",
+          onPress: () => {
+            Linking.openURL(appleMapsUrl); // Open in Apple Maps
+          },
+          style: "cancel",
         },
-      },
-      {
-        text: "Cancel", // The cancel option
-        style: "cancel", // It will close the alert without performing any action
-      },
-    ],
-    { cancelable: true }
-  );
-};
-
+      ],
+      { cancelable: true }
+    );
+  };
 
   // Render each event item in the FlatList
   const renderItem = ({ item }: { item: any }) => (
     <Pressable style={styles.eventItem} onPress={() => openModal(item)}>
       <Image source={{ uri: item.image }} style={styles.eventImage} />
       <View style={styles.eventDetails}>
-        <Text style={styles.eventTitle}>{item.artist_name}</Text>
+        <Text style={styles.eventTitle}>{item.title}</Text>
         <Text>{item.date} - {item.time}</Text>
-        <Text>Venue: {item.venue}</Text>
+        <Text>Price: {item.price}</Text>
       </View>
     </Pressable>
   );
@@ -125,10 +113,10 @@ const handleGetDirections = async (location: string) => {
       />
 
       <EventModal
-        visible={modalVisible} // Pass visibility state to the modal
-        event={selectedEvent} // Pass selected event details
-        onClose={closeModal} // Pass close function
-        onGetDirections={(location: any) => handleGetDirections(String(location))} // Pass function to handle directions
+        visible={modalVisible}
+        event={selectedEvent}
+        onClose={closeModal}
+        onGetDirections={handleGetDirections}
       />
     </View>
   );

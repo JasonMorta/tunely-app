@@ -57,44 +57,39 @@ const Index: React.FC = () => {
     setModalVisible(false);
   };
 
-// Function to check and offer navigation apps
-const handleGetDirections = async (location: string) => {
-  const googleMapsUrl = `comgooglemaps://?q=${location}`;
-  const appleMapsUrl = `maps:0,0?q=${location}`;
-  const browserGoogleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${location}`;
+  // Function to check and offer navigation apps
+  const handleGetDirections = async (location: string) => {
+    const googleMapsUrl = `comgooglemaps://?q=${location}`;
+    const appleMapsUrl = `maps:0,0?q=${location}`;
+    const browserGoogleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${location}`;
 
-  const isGoogleMapsAvailable = await Linking.canOpenURL('comgooglemaps://');
+    const isGoogleMapsAvailable = await Linking.canOpenURL('comgooglemaps://');
 
-  // Show an alert with options to choose between Google Maps or Apple Maps
-  Alert.alert(
-    "Open Directions",
-    "Choose the app to open directions",
-    [
-      {
-        text: "Google Maps",
-        onPress: () => {
-          if (isGoogleMapsAvailable) {
-            Linking.openURL(googleMapsUrl); // Open in Google Maps if installed
-          } else {
-            Linking.openURL(browserGoogleMapsUrl); // Open in browser if Google Maps app is not installed
-          }
+    Alert.alert(
+      "Open Directions",
+      "Choose the app to open directions",
+      [
+        {
+          text: "Google Maps",
+          onPress: () => {
+            if (isGoogleMapsAvailable) {
+              Linking.openURL(googleMapsUrl); // Open in Google Maps if installed
+            } else {
+              Linking.openURL(browserGoogleMapsUrl); // Open in browser if Google Maps app is not installed
+            }
+          },
         },
-      },
-      {
-        text: "Apple Maps",
-        onPress: () => {
-          Linking.openURL(appleMapsUrl); // Open in Apple Maps
+        {
+          text: "Apple Maps",
+          onPress: () => {
+            Linking.openURL(appleMapsUrl); // Open in Apple Maps
+          },
+          style: "cancel",
         },
-      },
-      {
-        text: "Cancel", // The cancel option
-        style: "cancel", // It will close the alert without performing any action
-      },
-    ],
-    { cancelable: true }
-  );
-};
-
+      ],
+      { cancelable: true }
+    );
+  };
 
   // Render each event item in the FlatList
   const renderItem = ({ item }: { item: any }) => (
