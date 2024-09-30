@@ -19,7 +19,7 @@ const Index: React.FC = () => {
 
         if (snapshot.exists()) {
           const eventsData = snapshot.val();
-          
+          console.log("Fetched events: ", eventsData);
           // Convert the snapshot data into an array of event objects
           const formattedEvents = Object.keys(eventsData).map((key) => ({
             id: key,
@@ -34,7 +34,7 @@ const Index: React.FC = () => {
 
           setEvents(formattedEvents); // Set the fetched events into the state
         } else {
-          console.log("No events data available");
+          console.log("No data available");
         }
       } catch (error) {
         console.error("Error fetching data from Firebase: ", error);
@@ -58,43 +58,44 @@ const Index: React.FC = () => {
     setModalVisible(false);
   };
 
-  // Function to check and offer navigation apps
-  const handleGetDirections = async (location: string) => {
-    const googleMapsUrl = `comgooglemaps://?q=${location}`;
-    const appleMapsUrl = `maps:0,0?q=${location}`;
-    const browserGoogleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${location}`;
+// Function to check and offer navigation apps
+const handleGetDirections = async (location: string) => {
+  const googleMapsUrl = `comgooglemaps://?q=${location}`;
+  const appleMapsUrl = `maps:0,0?q=${location}`;
+  const browserGoogleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${location}`;
 
-    const isGoogleMapsAvailable = await Linking.canOpenURL('comgooglemaps://');
+  const isGoogleMapsAvailable = await Linking.canOpenURL('comgooglemaps://');
 
-    // Show an alert with options to choose between Google Maps or Apple Maps
-    Alert.alert(
-      "Open Directions",
-      "Choose the app to open directions",
-      [
-        {
-          text: "Google Maps",
-          onPress: () => {
-            if (isGoogleMapsAvailable) {
-              Linking.openURL(googleMapsUrl); // Open in Google Maps if installed
-            } else {
-              Linking.openURL(browserGoogleMapsUrl); // Open in browser if Google Maps app is not installed
-            }
-          },
+  // Show an alert with options to choose between Google Maps or Apple Maps
+  Alert.alert(
+    "Open Directions",
+    "Choose the app to open directions",
+    [
+      {
+        text: "Google Maps",
+        onPress: () => {
+          if (isGoogleMapsAvailable) {
+            Linking.openURL(googleMapsUrl); // Open in Google Maps if installed
+          } else {
+            Linking.openURL(browserGoogleMapsUrl); // Open in browser if Google Maps app is not installed
+          }
         },
-        {
-          text: "Apple Maps",
-          onPress: () => {
-            Linking.openURL(appleMapsUrl); // Open in Apple Maps
-          },
+      },
+      {
+        text: "Apple Maps",
+        onPress: () => {
+          Linking.openURL(appleMapsUrl); // Open in Apple Maps
         },
-        {
-          text: "Cancel", // The cancel option
-          style: "cancel", // It will close the alert without performing any action
-        },
-      ],
-      { cancelable: true }
-    );
-  };
+      },
+      {
+        text: "Cancel", // The cancel option
+        style: "cancel", // It will close the alert without performing any action
+      },
+    ],
+    { cancelable: true }
+  );
+};
+
 
   // Render each event item in the FlatList
   const renderItem = ({ item }: { item: any }) => (
@@ -118,15 +119,11 @@ const Index: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      {events.length === 0 ? (
-        <Text>No events found.</Text> // Display message if no events are found
-      ) : (
-        <FlatList
-          data={events}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-        />
-      )}
+      <FlatList
+        data={events}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+      />
 
       <EventModal
         visible={modalVisible} // Pass visibility state to the modal
