@@ -55,7 +55,7 @@ const EventModal: React.FC<EventModalProps> = ({
               style={styles.modalImage}
               cachePolicy="memory-disk" // Caching strategy
               transition={1000} // Fade-in transition
-              placeholder={require('../assets/images/width_512.png')} // Placeholder image
+              placeholder={require('../assets/adaptive-icon.png')} // Placeholder image
             />
 
             {/* Display event details */}

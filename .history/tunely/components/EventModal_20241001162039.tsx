@@ -33,15 +33,15 @@ const EventModal: React.FC<EventModalProps> = ({
 }) => {
   return (
     <Modal
-      isVisible={visible} // Controls modal visibility
-      onBackdropPress={onClose} // Closes modal when backdrop is pressed
-      onSwipeComplete={onClose} // Closes modal on swipe completion
-      swipeDirection="down" // Enables swipe-down gesture
-      style={styles.modal} // Applies custom modal styles
+      isVisible={visible} // Replace 'visible' with 'isVisible'
+      onBackdropPress={onClose} // Close modal when backdrop is pressed
+      onSwipeComplete={onClose} // Close modal when swipe is completed
+      swipeDirection="down" // Enable swipe down to close
+      style={styles.modal} // Custom styles for the modal
       animationIn="slideInUp" // Animation when modal appears
       animationOut="slideOutDown" // Animation when modal disappears
-      propagateSwipe={true} // Allows swipe gestures within modal content
-      backdropTransitionOutTiming={0} // Fixes backdrop flickering on Android
+      propagateSwipe={true} // Allow swipe gestures within the modal content
+      backdropTransitionOutTiming={0} // Fix for backdrop flickering on Android
     >
       <View style={styles.modalContent}>
         {/* Drag Handle */}
@@ -53,9 +53,9 @@ const EventModal: React.FC<EventModalProps> = ({
             <ExpoImage
               source={{ uri: event.image }}
               style={styles.modalImage}
-              cachePolicy="memory-disk" // Caching strategy
-              transition={1000} // Fade-in transition
-              placeholder={require('../assets/images/width_512.png')} // Placeholder image
+              cachePolicy="memory-disk" // Choose appropriate caching strategy
+              transition={1000} // Optional: fade-in transition
+              placeholder={require('../assets/adaptive-icon.png')} // Optional: placeholder image
             />
 
             {/* Display event details */}
@@ -72,9 +72,7 @@ const EventModal: React.FC<EventModalProps> = ({
               <TouchableOpacity
                 style={styles.closeButton}
                 onPress={onClose}
-                activeOpacity={0.7} // Provides feedback on press
-                accessibilityLabel="Close modal"
-                accessible={true}
+                activeOpacity={0.7} // Optional: feedback on press
               >
                 <Text style={styles.buttonText}>BACK</Text>
               </TouchableOpacity>
@@ -83,16 +81,13 @@ const EventModal: React.FC<EventModalProps> = ({
               <TouchableOpacity
                 style={styles.directionsButton}
                 onPress={() => onGetDirections(event.location)}
-                activeOpacity={0.7} // Provides feedback on press
-                accessibilityLabel="Get directions to venue"
-                accessible={true}
+                activeOpacity={0.7} // Optional: feedback on press
               >
                 <Image
                   source={require('../assets/images/map.png')}
                   style={styles.directionsImage}
-                  accessible={false} // Decorative image
                 />
-            
+                <Text style={styles.buttonText}>Directions</Text>
               </TouchableOpacity>
             </View>
           </>
