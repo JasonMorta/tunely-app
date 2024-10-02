@@ -1,7 +1,7 @@
 // eventModalStyling.js
 import { StyleSheet } from "react-native";
 
-const primaryColor = "#E37380";
+const primaryColor = "red";
 
 const baseModalText = {
   fontSize: 16,

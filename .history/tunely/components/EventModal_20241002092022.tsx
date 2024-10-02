@@ -60,26 +60,11 @@ const EventModal: React.FC<EventModalProps> = ({
 
             {/* Display event details */}
             <Text style={styles.modalTitle}>{event.artist_name}</Text>
-            <Text style={styles.modalDate}>
-              <Text style={{ fontWeight: 'bold' }}>Date: </Text>
-              {event.date}
-            </Text>
-            <Text style={styles.modalTime}>
-              <Text style={{ fontWeight: 'bold' }}>Time: </Text>
-              {event.time || 'Not specified'}
-            </Text>
-            <Text style={styles.modalVenue}>
-              <Text style={{ fontWeight: 'bold' }}>Venue: </Text>
-              {event.venue}
-            </Text>
-            <Text style={styles.modalLocation}>
-              <Text style={{ fontWeight: 'bold' }}>Location: </Text>
-              {event.location}
-            </Text>
-            <Text style={styles.modalDescription}>
-              {event.description}
-            </Text>
-
+            <Text style={styles.modalDate}>Date: {event.date}</Text>
+            <Text style={styles.modalTime}>Time: {event.time}</Text>
+            <Text style={styles.modalVenue}>Venue: {event.venue}</Text>
+            <Text style={styles.modalLocation}>Location: {event.location}</Text>
+            <Text style={styles.modalDescription}>{event.description}</Text>
 
             {/* Container for Directions and Close buttons */}
             <View style={styles.buttonContainer}>

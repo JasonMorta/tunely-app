@@ -1,7 +1,7 @@
 // eventModalStyling.js
 import { StyleSheet } from "react-native";
 
-const primaryColor = "#E37380";
+const primaryColor = "#E37383";
 
 const baseModalText = {
   fontSize: 16,
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     // Padding can be adjusted as needed
     paddingHorizontal: 20,
     paddingTop: 10,
-    alignItems: 'start',
+    alignItems: 'center',
     // Shadow for iOS
     shadowColor: '#000',
     shadowOffset: { width: 0, height: -2 },
@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     maxHeight: '90%', // Prevent modal from taking full screen height
   },
+  
   // Drag handle to indicate swipe-down gesture
   dragHandle: {
     width: 40,
@@ -47,6 +48,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: 10,
   },
+  
   // Event image styling
   modalImage: {
     width: '100%',
@@ -62,6 +64,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5, // Elevation for Android shadow
   },
+  
   // Title text styling
   modalTitle: {
     fontSize: 24,
@@ -75,8 +78,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: 'center', // Center the title text
   },
+
   modalDate: {
-    textAlignVertical: 'left',
     ...baseModalText,
   },
   modalTime: {
@@ -90,15 +93,15 @@ const styles = StyleSheet.create({
   },
   modalDescription: {
     ...baseModalText,
-    textAlign: 'left',
   },
+  
 
   // Description text styling
   modalDescription: {
     fontSize: 14,
     color: '#666',
     marginBottom: 20,
-    textAlign: 'left', // Center the description text
+    textAlign: 'center', // Center the description text
   },
   
   // Container for the buttons

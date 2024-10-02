@@ -60,26 +60,11 @@ const EventModal: React.FC<EventModalProps> = ({
 
             {/* Display event details */}
             <Text style={styles.modalTitle}>{event.artist_name}</Text>
-            <Text style={styles.modalDate}>
-              <Text style={{ fontWeight: 'bold' }}>Date: </Text>
-              {event.date}
-            </Text>
-            <Text style={styles.modalTime}>
-              <Text style={{ fontWeight: 'bold' }}>Time: </Text>
-              {event.time || 'Not specified'}
-            </Text>
-            <Text style={styles.modalVenue}>
-              <Text style={{ fontWeight: 'bold' }}>Venue: </Text>
-              {event.venue}
-            </Text>
-            <Text style={styles.modalLocation}>
-              <Text style={{ fontWeight: 'bold' }}>Location: </Text>
-              {event.location}
-            </Text>
-            <Text style={styles.modalDescription}>
-              {event.description}
-            </Text>
-
+            <Text style={styles.modalSubtitle}>Date: {event.date}</Text>
+            <Text style={styles.modalSubtitle}>Time: {event.time}</Text>
+            <Text style={styles.modalSubtitle}>Venue: {event.venue}</Text>
+            <Text style={styles.modalSubtitle}>Location: {event.location}</Text>
+            <Text style={styles.modalDescription}>{event.description}</Text>
 
             {/* Container for Directions and Close buttons */}
             <View style={styles.buttonContainer}>
@@ -103,7 +88,7 @@ const EventModal: React.FC<EventModalProps> = ({
                 accessible={true}
               >
                 <Image
-                  source={require('../assets/images/map-mini.png')}
+                  source={require('../assets/images/map.png')}
                   style={styles.directionsImage}
                   accessible={false} // Decorative image
                 />

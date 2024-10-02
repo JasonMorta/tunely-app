@@ -66,7 +66,7 @@ const EventModal: React.FC<EventModalProps> = ({
             </Text>
             <Text style={styles.modalTime}>
               <Text style={{ fontWeight: 'bold' }}>Time: </Text>
-              {event.time || 'Not specified'}
+              {event.time || none}
             </Text>
             <Text style={styles.modalVenue}>
               <Text style={{ fontWeight: 'bold' }}>Venue: </Text>
