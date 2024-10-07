@@ -8,7 +8,6 @@ import getStyles from './eventModalStyling';
 import { useColorScheme } from '../hooks/useColorScheme';
 import { ThemedView } from './ThemedView';
 import { ThemedText } from './ThemedText';
-import Spacer from './Spacer';
 
 // Define types for the props
 interface EventModalProps {
@@ -21,7 +20,10 @@ interface EventModalProps {
 // Define the structure of an Event object
 interface Event {
   artist_name: string;
-  day: string;
+  date: {
+    day: string;
+    time: string;
+  };
   description: string;
   image: string;
   location: string;
@@ -74,7 +76,7 @@ const EventModal: React.FC<EventModalProps> = ({
             <ThemedText style={styles.modalTitle}>{event.artist_name}</ThemedText>
             <ThemedText style={styles.modalDate}>
               <ThemedText style={{ fontWeight: 'bold' }}>Day: </ThemedText>
-              {event.day || 'Not specified'}
+              {event.date.day || 'Not specified'}
             </ThemedText>
             <ThemedText style={styles.modalTime}>
               <ThemedText style={{ fontWeight: 'bold' }}>Time: </ThemedText>
@@ -91,6 +93,8 @@ const EventModal: React.FC<EventModalProps> = ({
             <ThemedText style={styles.modalDescription}>
               {event.description}
             </ThemedText>
+
+
             {/* Container for Directions and Close buttons */}
             <ThemedView style={styles.buttonContainer}>
               {/* Close Button */}
@@ -120,7 +124,6 @@ const EventModal: React.FC<EventModalProps> = ({
             
               </TouchableOpacity>
             </ThemedView>
-            <Spacer height={20} width='50%' />
             
           </>
         )}

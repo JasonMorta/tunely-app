@@ -52,8 +52,7 @@ const EventItem: React.FC<EventItemProps> = ({ event, onPress, onImageError }) =
       </View>
       <View style={styles.eventDetails}>
         <ThemedText style={styles.eventTitle}>{event.artist_name}</ThemedText>
-        <ThemedText>Day: {event.day}</ThemedText> 
-         <ThemedText>Time: {event.time}</ThemedText>
+        <ThemedText>{event.day} - {event.time}</ThemedText>
         <ThemedText>Venue: {event.venue}</ThemedText>
       </View>
     </Pressable>

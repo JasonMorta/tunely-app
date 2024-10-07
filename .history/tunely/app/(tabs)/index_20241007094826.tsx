@@ -43,12 +43,11 @@ const Index: React.FC = () => {
         const formattedEvents = Object.keys(eventsData).map((key) => ({
           id: key,
           artist_name: eventsData[key].artist_name,
-          day: eventsData[key].date.day,
-          time: eventsData[key].date.time,
+          date: eventsData[key].day,
           description: eventsData[key].description,
           image: eventsData[key].image,
           location: eventsData[key].location,
-          
+          time: eventsData[key].time,
           venue: eventsData[key].venue,
         }));
   

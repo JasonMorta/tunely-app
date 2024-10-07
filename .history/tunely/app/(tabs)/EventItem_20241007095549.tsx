@@ -14,6 +14,7 @@ interface EventItemProps {
 }
 
 const EventItem: React.FC<EventItemProps> = ({ event, onPress, onImageError }) => {
+  console.log('event', event)
   const [imageLoading, setImageLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
   const colorScheme = useColorScheme();

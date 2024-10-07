@@ -8,7 +8,6 @@ import getStyles from './eventModalStyling';
 import { useColorScheme } from '../hooks/useColorScheme';
 import { ThemedView } from './ThemedView';
 import { ThemedText } from './ThemedText';
-import Spacer from './Spacer';
 
 // Define types for the props
 interface EventModalProps {
@@ -91,6 +90,8 @@ const EventModal: React.FC<EventModalProps> = ({
             <ThemedText style={styles.modalDescription}>
               {event.description}
             </ThemedText>
+
+
             {/* Container for Directions and Close buttons */}
             <ThemedView style={styles.buttonContainer}>
               {/* Close Button */}
@@ -120,7 +121,6 @@ const EventModal: React.FC<EventModalProps> = ({
             
               </TouchableOpacity>
             </ThemedView>
-            <Spacer height={20} width='50%' />
             
           </>
         )}

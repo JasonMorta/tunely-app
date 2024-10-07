@@ -112,9 +112,9 @@ const getStyles = (colorScheme) => StyleSheet.create({
   
   // Close button styling
   closeButton: {
-    width: '20%', // Adjust width to fit two buttons side by side
+    width: '48%', // Adjust width to fit two buttons side by side
     backgroundColor: primaryColor, // Example color (light red/pink)
-    padding: 10,
+    padding: 15,
     borderRadius: 8,
     alignItems: 'center', // Center text horizontally
     justifyContent: 'center', // Center text vertically
@@ -159,7 +159,7 @@ const getStyles = (colorScheme) => StyleSheet.create({
   // Button text styling
   buttonText: {
     color: 'white', // White text for contrast
-    fontSize: 16,
+    //fontSize: 16,
     fontWeight: 'bold',
   },
 });

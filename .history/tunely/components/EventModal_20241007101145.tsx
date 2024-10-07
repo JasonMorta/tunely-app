@@ -120,7 +120,7 @@ const EventModal: React.FC<EventModalProps> = ({
             
               </TouchableOpacity>
             </ThemedView>
-            <Spacer height={20} width='50%' />
+            <Spacer />
             
           </>
         )}

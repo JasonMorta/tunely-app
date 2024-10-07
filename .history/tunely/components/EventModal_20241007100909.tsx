@@ -8,7 +8,6 @@ import getStyles from './eventModalStyling';
 import { useColorScheme } from '../hooks/useColorScheme';
 import { ThemedView } from './ThemedView';
 import { ThemedText } from './ThemedText';
-import Spacer from './Spacer';
 
 // Define types for the props
 interface EventModalProps {
@@ -120,7 +119,6 @@ const EventModal: React.FC<EventModalProps> = ({
             
               </TouchableOpacity>
             </ThemedView>
-            <Spacer height={20} width='50%' />
             
           </>
         )}

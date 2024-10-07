@@ -112,7 +112,7 @@ const getStyles = (colorScheme) => StyleSheet.create({
   
   // Close button styling
   closeButton: {
-    width: '20%', // Adjust width to fit two buttons side by side
+    width: '48%', // Adjust width to fit two buttons side by side
     backgroundColor: primaryColor, // Example color (light red/pink)
     padding: 10,
     borderRadius: 8,
