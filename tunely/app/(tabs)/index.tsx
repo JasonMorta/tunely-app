@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { database } from '../../firebaseConfig'; // Import the Firebase config
 import { ref, onValue, off } from "firebase/database"; // Use onValue for real-time updates
-import EventModal from '../../components/EventModal';
+import EventModal from '../../components/EventModal/EventModal';
 import { ThemedView } from '../../components/ThemedView';
 import { ThemedText } from '../../components/ThemedText';
 import { useColorScheme } from '../../hooks/useColorScheme';
@@ -131,7 +131,7 @@ const Index: React.FC = () => {
     <EventItem
       event={item}
       onPress={() => openModal(item)}
-      onImageError={(id) => handleImageError(id)}
+      onImageError={(id) => id && handleImageError(id)}
     />
   );
 

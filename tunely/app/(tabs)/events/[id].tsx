@@ -1,7 +1,7 @@
 import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
 import React from 'react';
 import { useLocalSearchParams } from 'expo-router';
-import events from '../../eventsData'; // Import events data
+// import events from '../../eventsData'; // Import events data
 import { ThemedView } from '../../../components/ThemedView';
 import { ThemedText } from '../../../components/ThemedText';
 import { useColorScheme } from '../../../hooks/useColorScheme';
@@ -10,7 +10,7 @@ import { Colors } from '../../../constants/Colors';
 export default function EventPage() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const colorScheme = useColorScheme();
-  const event = events.find((item: any) => item.id === id); // Find event by ID
+  //const event = events.find((item: any) => item.id === id); // Find event by ID
 
   const styles = getStyles(colorScheme);
 
@@ -19,11 +19,11 @@ export default function EventPage() {
   return (
     <ThemedView style={styles.container}>
       <Image source={{ uri: event.image }} style={styles.eventImage} />
-      <ThemedText style={styles.title}>{event.title}</ThemedText>
+      {/* <ThemedText style={styles.title}>{event.title}</ThemedText>
       <ThemedText style={styles.context}>{event.context}</ThemedText>
       <ThemedText>When: {event.date} {event.time}</ThemedText>
       <ThemedText>Where: {event.organizer}</ThemedText>
-      <ThemedText>Location: Latitude {event.location.latitude}, Longitude {event.location.longitude}</ThemedText>
+      <ThemedText>Location: Latitude {event.location.latitude}, Longitude {event.location.longitude}</ThemedText> */}
 
       <Pressable style={styles.button}>
         <ThemedText style={styles.buttonText}>Directions</ThemedText>

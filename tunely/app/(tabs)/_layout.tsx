@@ -3,6 +3,7 @@ import { View, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'; // Import Material Icons
 import { useColorScheme } from '../../hooks/useColorScheme';
 import { Colors, primaryColor } from '../../constants/Colors';
+import React from 'react';
 
 export default function TabsLayout() {
   const colorScheme = useColorScheme();
@@ -12,7 +13,7 @@ export default function TabsLayout() {
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: true,
         tabBarIcon: ({ focused, color, size }) => {
-          let iconName: string;
+          let iconName: string = '';
 
           // Define icons based on route name
           if (route.name === 'index') {

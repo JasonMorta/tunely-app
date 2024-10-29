@@ -23,11 +23,6 @@ const EventItem: React.FC<EventItemProps> = ({ event, onPress, onImageError }) =
 
   // Safely access nested properties with fallback values
   const performerName = event.PERFORMER?.name || "Unknown Performer";
-  // const performerEmail = typeof event.PERFORMER?.email === 'string'
-  //   ? event.PERFORMER.email
-  //   : Array.isArray(event.PERFORMER?.email) && (event.PERFORMER.email as Array<any>).length > 0
-  //     ? event.PERFORMER.email[0]
-  //     : "No Email";
 
   const date = event.eventDate?.startDay && event.eventDate?.startTime
     ? `${event.eventDate.startDay} `
@@ -35,7 +30,8 @@ const EventItem: React.FC<EventItemProps> = ({ event, onPress, onImageError }) =
       ? `${event.date.startDay} ${event.date.startTime}`
       : "No Date");
 
-  const venueName = event.VENUE?.name || event.venue || "No Venue";
+  const venueName = event.VENUE?.name || "Not Specified";
+  const eventCost = event.pricing?.price || "Free";
   const venueAddress = event.VENUE?.address  || "No Address";
   const description = event.description || "No Description";
 
@@ -76,12 +72,21 @@ const EventItem: React.FC<EventItemProps> = ({ event, onPress, onImageError }) =
       <View style={styles.eventDetails}>
         <ThemedText style={styles.eventTitle}>{performerName}</ThemedText>
         <ThemedText style={styles.eventVenueName}>{`${venueName} `}</ThemedText>
-        <ThemedText style={styles.eventSubtitle}>{`Date: ${date} `} </ThemedText>
-        <ThemedText style={styles.eventTime}>{`Time: ${event.eventDate?.startTime} `}</ThemedText>
+        <ThemedText style={styles.eventPrice}>{`Cost: ${eventCost} `}</ThemedText>
         
-      {/*   <ThemedText style={styles.eventDescription} numberOfLines={2}>
+        {/* Updated Description with Maximum of Two Lines */}
+        <ThemedText 
+          style={styles.eventDescription} 
+          numberOfLines={2} 
+          ellipsizeMode="tail"
+        >
           {description}
-        </ThemedText> */}
+        </ThemedText>
+        
+        <View style={styles.timeData}>
+          <ThemedText style={styles.eventSubtitle}>2 hours 15min </ThemedText>
+          <ThemedText style={styles.eventTime}>30km away</ThemedText>
+        </View>
       </View>
     </Pressable>
   );
@@ -90,22 +95,30 @@ const EventItem: React.FC<EventItemProps> = ({ event, onPress, onImageError }) =
 const getStyles = (colorScheme: any) => StyleSheet.create({
   eventItem: {
     flexDirection: 'row',
+    alignContent: 'flex-start',
     borderBottomWidth: 1,
     borderColor: colorScheme === 'dark' ? tintColorLight : tintColorDark,
     paddingVertical: 10,
     borderRadius: 0,
-    alignItems: 'center',
+    alignItems: 'flex-start',
+    position: 'relative',
     backgroundColor: colorScheme === 'dark' ? '#121212' : '#ffffff', // Adjust based on theme
   },
   imageContainer: {
     position: 'relative',
-    width: 80,
-    height: 80, // Increased height for better image visibility
+    width: 150,
+    height: 150, // Increased height for better image visibility
     borderRadius: 8,
     overflow: 'hidden',
   },
+  eventDetails: {
+    marginLeft: 10,
+    flex: 1,
+    justifyContent: 'flex-start',
+    height:150,
+  },
   eventImage: {
-    width: '100%',
+    width: 150,
     height: '100%',
     borderRadius: 8,
   },
@@ -128,11 +141,7 @@ const getStyles = (colorScheme: any) => StyleSheet.create({
     marginLeft: -10, // Half of the ActivityIndicator size
     marginTop: -10,
   },
-  eventDetails: {
-    marginLeft: 10,
-    flex: 1,
-    justifyContent: 'center',
-  },
+
   eventTitle: {
     fontWeight: 'bold',
     fontSize: 18,
@@ -143,11 +152,22 @@ const getStyles = (colorScheme: any) => StyleSheet.create({
     fontWeight: 'bold',
     color: colorScheme === 'dark' ? '#bbbbbb' : '#555555',
     marginTop: 2,
+
+  },
+  eventPrice: {
+    fontSize: 14,
+    color: colorScheme === 'dark' ? '#bbbbbb' : '#555555',
+    marginTop: 2,
   },
   eventSubtitle: {
     fontSize: 14,
     color: colorScheme === 'dark' ? '#bbbbbb' : '#555555',
     marginTop: 2,
+  },
+  timeData: {
+    marginTop: 'auto',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   eventTime:{
     fontSize: 14,
@@ -160,9 +180,10 @@ const getStyles = (colorScheme: any) => StyleSheet.create({
     marginTop: 2,
   },
   eventDescription: {
-    fontSize: 12,
+    fontSize: 13,
     color: colorScheme === 'dark' ? '#dddddd' : '#777777',
     marginTop: 4,
+    lineHeight: 15,
   },
 });
 
