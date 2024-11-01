@@ -17,7 +17,7 @@ interface EventSectionProps {
   eventDetails: EventData; // Use EventData type for prop
 }
 
-const EventSection: React.FC<EventSectionProps> = ({ eventDetails }) => {
+const PerformerSection: React.FC<EventSectionProps> = ({ eventDetails }) => {
   const { PERFORMER, VENUE } = eventDetails;
   console.log('eventDetails', eventDetails);
 
@@ -32,13 +32,9 @@ const EventSection: React.FC<EventSectionProps> = ({ eventDetails }) => {
 
   return (
     <View style={styles.container}>
-      {VENUE && VENUE.image && (
-        <Image source={{ uri: VENUE.image }} style={styles.performerImage} />
+      {PERFORMER && PERFORMER.image && (
+        <Image source={{ uri: PERFORMER.image }} style={styles.performerImage} />
       )}
-  {/* Venue description */}
-      <ThemedText style={styles.title}>{VENUE?.name}</ThemedText>
-      
-
 
       {/* Render social media icons */}
       <View style={styles.socialMediaContainer}>
@@ -107,4 +103,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EventSection;
+export default PerformerSection;

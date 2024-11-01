@@ -36,7 +36,7 @@ const EventItem: React.FC<EventItemProps> = ({ event, onPress, onImageError }) =
   const description = event.description || "No Description";
 
   // Determine the image URI, prioritizing performerImage over event.image
-  const imageUri = event.PERFORMER?.performerImage || undefined;
+  const imageUri = event.PERFORMER?.image || undefined;
 
   const handleLoad = () => {
     setImageLoading(false);

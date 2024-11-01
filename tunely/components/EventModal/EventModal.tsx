@@ -8,6 +8,7 @@ import EventSection from './EventSection';
 import VenueSection from './VenueSection';
 import { EventData } from '../../types/EventTypes';
 import { ThemedText } from '../ThemedText';
+import PerformerSection from './PerformerSection';
 
 interface EventModalProps {
   visible: boolean;
@@ -27,8 +28,9 @@ const EventModal: React.FC<EventModalProps> = ({ visible, event, onClose }) => {
       style={styles.modal}
     >
       <ThemedView style={styles.modalContent}>
+        <PerformerSection eventDetails={event} />
         <EventSection eventDetails={event} />
-        <VenueSection venueDetails={event.VENUE} />
+        {/* <VenueSection venueDetails={event.VENUE} /> */}
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={onClose} style={styles.backButton}>
             <ThemedText style={styles.buttonText}>BACK</ThemedText>
