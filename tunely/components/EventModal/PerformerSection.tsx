@@ -30,6 +30,10 @@ const PerformerSection: React.FC<EventSectionProps> = ({ eventDetails }) => {
     // Optional: Add logic to handle like action (e.g., API call)
   };
 
+  if (!PERFORMER) {
+    return 'no data';
+  }
+
   return (
     <View style={styles.container}>
       {PERFORMER && PERFORMER.image && (
@@ -74,6 +78,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
     paddingBottom: 15, // Added padding for better spacing
+    backgroundColor: 'beige',
+    width: '100%',
   },
   performerImage: {
     width: '100%',

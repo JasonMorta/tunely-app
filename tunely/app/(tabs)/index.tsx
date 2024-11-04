@@ -175,7 +175,7 @@ const Index: React.FC = () => {
 const getStyles = (colorScheme: any) => StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    padding: 0,
   },
   loadingImage: {
     width: "100%", // Adjust as needed

@@ -99,6 +99,7 @@ const getStyles = (colorScheme: any) => StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: colorScheme === 'dark' ? tintColorLight : tintColorDark,
     paddingVertical: 10,
+    paddingHorizontal: 10,
     borderRadius: 0,
     alignItems: 'flex-start',
     position: 'relative',

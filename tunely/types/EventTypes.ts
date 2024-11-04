@@ -86,7 +86,7 @@ interface Venue {
   openingHours?: VenueOpeningHours;
   socialMedia?: VenueSocialMedia;
   venueLinks?: VenueLinks;
-  image?: string;
+  images?: [string];
 }
 
 // Event Date Interface

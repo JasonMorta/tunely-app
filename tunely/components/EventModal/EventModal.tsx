@@ -1,68 +1,227 @@
 // src/components/EventModal.tsx
 
-import React from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import Modal from 'react-native-modal';
+import React, { useEffect, useRef, useState } from 'react';
+import {
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  Dimensions,
+  PanResponder,
+  Animated,
+  Easing,
+} from 'react-native';
 import { ThemedView } from '../ThemedView';
 import EventSection from './EventSection';
-import VenueSection from './VenueSection';
 import { EventData } from '../../types/EventTypes';
 import { ThemedText } from '../ThemedText';
 import PerformerSection from './PerformerSection';
 
-interface EventModalProps {
+interface EventModalProps { 
   visible: boolean;
   event: EventData; // Ensure the event is of type EventData
   onClose: () => void;
 }
 
+const { height: SCREEN_HEIGHT } = Dimensions.get('window');
+
 const EventModal: React.FC<EventModalProps> = ({ visible, event, onClose }) => {
-  if (!event) return null;
+  const panY = useRef(new Animated.Value(SCREEN_HEIGHT)).current; // Start off-screen
+  const [isVisible, setIsVisible] = useState(visible);
+
+  // Reference to prevent multiple animations
+  const animationRef = useRef<Animated.CompositeAnimation | null>(null);
+
+  // Handle opening and closing animations
+  useEffect(() => {
+    if (visible) {
+      setIsVisible(true);
+      // Slide up animation
+      animationRef.current = Animated.timing(panY, {
+        toValue: 0,
+        duration: 300,
+        easing: Easing.out(Easing.ease),
+        useNativeDriver: false, // Changed to false for consistency
+      });
+      animationRef.current.start();
+    } else if (isVisible) {
+      // Slide down animation
+      animationRef.current = Animated.timing(panY, {
+        toValue: SCREEN_HEIGHT,
+        duration: 300,
+        easing: Easing.in(Easing.ease),
+        useNativeDriver: false, // Changed to false for consistency
+      });
+      animationRef.current.start(() => {
+        setIsVisible(false);
+        onClose(); // Notify parent after animation completes
+      });
+    }
+    // Cleanup on unmount
+    return () => {
+      animationRef.current?.stop();
+    };
+  }, [visible]);
+
+  // PanResponder for swipe-down to close
+  const panResponder = useRef(
+    PanResponder.create({
+      // Allow gesture only when swiping down
+      onMoveShouldSetPanResponder: (_, gestureState) => {
+        // Only set responder if the gesture is a swipe down
+        return (
+          gestureState.dy > 0 &&
+          Math.abs(gestureState.dy) > Math.abs(gestureState.dx)
+        );
+      },
+      onPanResponderMove: Animated.event(
+        [
+          null,
+          { dy: panY },
+        ],
+        { useNativeDriver: false }
+      ),
+      onPanResponderRelease: (_, gestureState) => {
+        if (gestureState.dy > 150) {
+          // Slide down and close
+          Animated.timing(panY, {
+            toValue: SCREEN_HEIGHT,
+            duration: 300,
+            easing: Easing.in(Easing.ease),
+            useNativeDriver: false, // Changed to false for consistency
+          }).start(() => {
+            setIsVisible(false);
+            onClose(); // Notify parent after animation completes
+          });
+        } else {
+          // Return to original position
+          Animated.timing(panY, {
+            toValue: 0,
+            duration: 300,
+            easing: Easing.out(Easing.ease),
+            useNativeDriver: false, // Changed to false for consistency
+          }).start();
+        }
+      },
+    })
+  ).current;
+
+  // Prevent rendering when not visible or when event is null
+  if (!isVisible || !event) return null;
 
   return (
-    <Modal
-      isVisible={visible}
-      onBackdropPress={onClose}
-      onSwipeComplete={onClose} // Handle swipe to close
-      swipeDirection={['down']} // Allow swipe down to close
-      style={styles.modal}
-    >
-      <ThemedView style={styles.modalContent}>
-        <PerformerSection eventDetails={event} />
-        <EventSection eventDetails={event} />
-        {/* <VenueSection venueDetails={event.VENUE} /> */}
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress={onClose} style={styles.backButton}>
-            <ThemedText style={styles.buttonText}>BACK</ThemedText>
-          </TouchableOpacity>
+    <View style={styles.overlay}>
+      <Animated.View
+        style={[
+          styles.modalContent,
+          { transform: [{ translateY: panY }] },
+        ]}
+      >
+        {/* Header with Drag Handle */}
+        <View
+          style={styles.header}
+          {...panResponder.panHandlers} // Attach PanResponder to the header
+        >
+          <View style={styles.dragHandle} />
         </View>
-      </ThemedView>
-    </Modal>
+
+        <ScrollView
+          contentContainerStyle={styles.scrollViewContent}
+          showsVerticalScrollIndicator={false}
+          nestedScrollEnabled={true} // Allow nested scrolling
+        >
+          {/* Performer Section */}
+          <PerformerSection eventDetails={event} />
+
+          {/* Event Sections */}
+          <EventSection eventDetails={event} />
+          <EventSection eventDetails={event} />
+          <EventSection eventDetails={event} />
+
+          {/* Venue Section (Uncomment if needed) */}
+          {/* <VenueSection venueDetails={event.VENUE} /> */}
+
+          {/* Spacer to ensure "BACK" button is reachable */}
+          <View style={{ height: 20 }} />
+
+          {/* Back Button */}
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity onPress={() => {
+              // Trigger closing animation
+              Animated.timing(panY, {
+                toValue: SCREEN_HEIGHT,
+                duration: 300,
+                easing: Easing.in(Easing.ease),
+                useNativeDriver: false,
+              }).start(() => {
+                setIsVisible(false);
+                onClose();
+              });
+            }} style={styles.backButton}>
+              <ThemedText style={styles.buttonText}>BACK</ThemedText>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </Animated.View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  modal: {
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    // Semi-transparent background
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'flex-end',
-    margin: 0,
+    // Box shadow for iOS
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    // Elevation for Android
+    elevation: 5,
   },
   modalContent: {
-    backgroundColor: '#fff',
-    padding: 20,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    backgroundColor: 'gray',
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+    paddingTop: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    width: "100%",
+    maxHeight: SCREEN_HEIGHT * 0.75,
+  },
+  header: {
+    alignItems: 'center',
+    paddingVertical: 10,
+  },
+  dragHandle: {
+    width: 40,
+    height: 5,
+    borderRadius: 2.5,
+    backgroundColor: '#ccc',
+  },
+  scrollViewContent: {
+    paddingBottom: 20,
   },
   buttonContainer: {
     marginTop: 20,
+    alignItems: 'center',
   },
   backButton: {
-    backgroundColor: '#ff6347',
-    padding: 10,
-    borderRadius: 5,
+    backgroundColor: '#ff6347', // Example color, adjust as needed
+    paddingVertical: 12,
+    paddingHorizontal: 40,
+    borderRadius: 8,
   },
   buttonText: {
     color: '#fff',
     textAlign: 'center',
+    fontWeight: 'bold',
   },
 });
 
