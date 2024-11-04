@@ -8,10 +8,12 @@ import { EventData } from '../../types/EventTypes';
 // Placeholder for social media icon imports
 import FacebookIcon from '../../assets/icons/facebook-svgrepo-com.png'; // Update with actual icon paths
 import InstagramIcon from '../../assets/icons/instagram-1-svgrepo-com.png';
+import Twitter from '../../assets/icons/twitter-svgrepo-com.png';
 import YoutubeIcon from '../../assets/icons/youtube-svgrepo-com.png';
 import GoogleMapsIcon from '../../assets/icons/map.png';
 import LikeFalse from '../../assets/icons/like-false.png';
 import LikeTrue from '../../assets/icons/like-true.png';
+import { ThemedView } from '../ThemedView';
 
 interface EventSectionProps {
   eventDetails: EventData; // Use EventData type for prop
@@ -19,7 +21,7 @@ interface EventSectionProps {
 
 const PerformerSection: React.FC<EventSectionProps> = ({ eventDetails }) => {
   const { PERFORMER, VENUE } = eventDetails;
-  console.log('eventDetails', eventDetails);
+  
 
   // Initialize isLiked as a boolean
   const [isLiked, setIsLiked] = React.useState(false);
@@ -35,13 +37,16 @@ const PerformerSection: React.FC<EventSectionProps> = ({ eventDetails }) => {
   }
 
   return (
-    <View style={styles.container}>
+    <ThemedView style={styles.container}>
+        {/* <ThemedText style={styles.title}>Performer</ThemedText> */}
+
       {PERFORMER && PERFORMER.image && (
         <Image source={{ uri: PERFORMER.image }} style={styles.performerImage} />
       )}
 
       {/* Render social media icons */}
-      <View style={styles.socialMediaContainer}>
+    
+      <ThemedView style={styles.socialMediaContainer}>
         {PERFORMER?.socialMedia?.youtube && (
           <Image source={YoutubeIcon} style={styles.icon} />
         )}
@@ -50,6 +55,9 @@ const PerformerSection: React.FC<EventSectionProps> = ({ eventDetails }) => {
         )}
         {PERFORMER?.socialMedia?.instagram && (
           <Image source={InstagramIcon} style={styles.icon} />
+        )}
+         {PERFORMER?.socialMedia?.twitter && (
+          <Image source={Twitter} style={styles.icon} />
         )}
         {PERFORMER?.socialMedia?.linkedin && (
           <Image source={GoogleMapsIcon} style={styles.icon} />
@@ -65,40 +73,54 @@ const PerformerSection: React.FC<EventSectionProps> = ({ eventDetails }) => {
             resizeMode="contain"
           />
         </TouchableOpacity>
-      </View>
+      </ThemedView>
 
-      <ThemedText style={styles.title}>{PERFORMER?.name}</ThemedText>
-    </View>
+      {/* Display performer name */}
+      <ThemedText style={styles.performerName}>{PERFORMER?.name}</ThemedText>
+    </ThemedView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
+    // marginBottom: 15,
+    // borderBottomWidth: 1,
+    // borderBottomColor: '#ddd',
     paddingBottom: 15, // Added padding for better spacing
-    backgroundColor: 'beige',
+    //backgroundColor: 'beige',
     width: '100%',
   },
   performerImage: {
     width: '100%',
-    height: 200,
+    height: 250,
     borderRadius: 10,
     marginBottom: 10,
-    backgroundColor: '#f0f0f0', // Placeholder background color
+    //backgroundColor: '#f0f0f0', // Placeholder background color
   },
   title: {
     fontSize: 22,
     fontWeight: 'bold',
-    textAlign: 'center',
+    textAlign: 'left',
     marginVertical: 10,
   },
   socialMediaContainer: {
+    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-around', // Align icons horizontally
+    justifyContent: 'space-evenly', // Evenly space the icons
     alignItems: 'center', // Vertically center the icons
     marginVertical: 10, // Space above and below the icons
+    borderBottomWidth: 1,
+    paddingBottom: 15,
+    borderBottomColor: '#000',
+  },
+  performerName: {
+    fontSize: 35,
+    height: 'auto',
+    textAlign: 'center',
+    lineHeight: 50,
+
+    fontWeight: 'bold',
+    marginVertical: 0,
   },
   icon: {
     width: 40,

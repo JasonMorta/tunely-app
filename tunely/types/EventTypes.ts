@@ -183,7 +183,6 @@ export interface EventData {
   description?: string;
   entryRequirements?: string;
   eventDate?: EventDate;
-  date?: EventDate; // Some events use 'date' instead of 'eventDate'
   insurance?: string;
   links?: EventLinks;
   organizer?: Organizer;

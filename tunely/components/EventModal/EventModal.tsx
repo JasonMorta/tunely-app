@@ -16,6 +16,7 @@ import EventSection from './EventSection';
 import { EventData } from '../../types/EventTypes';
 import { ThemedText } from '../ThemedText';
 import PerformerSection from './PerformerSection';
+import VenueSection from './VenueSection';
 
 interface EventModalProps { 
   visible: boolean;
@@ -106,11 +107,14 @@ const EventModal: React.FC<EventModalProps> = ({ visible, event, onClose }) => {
     })
   ).current;
 
+  // Venue structure
+  // 
+
   // Prevent rendering when not visible or when event is null
   if (!isVisible || !event) return null;
 
   return (
-    <View style={styles.overlay}>
+    <ThemedView style={styles.overlay}>
       <Animated.View
         style={[
           styles.modalContent,
@@ -118,12 +122,12 @@ const EventModal: React.FC<EventModalProps> = ({ visible, event, onClose }) => {
         ]}
       >
         {/* Header with Drag Handle */}
-        <View
+        <ThemedView
           style={styles.header}
           {...panResponder.panHandlers} // Attach PanResponder to the header
         >
-          <View style={styles.dragHandle} />
-        </View>
+          <ThemedView style={styles.dragHandle} />
+        </ThemedView>
 
         <ScrollView
           contentContainerStyle={styles.scrollViewContent}
@@ -135,17 +139,15 @@ const EventModal: React.FC<EventModalProps> = ({ visible, event, onClose }) => {
 
           {/* Event Sections */}
           <EventSection eventDetails={event} />
-          <EventSection eventDetails={event} />
-          <EventSection eventDetails={event} />
 
           {/* Venue Section (Uncomment if needed) */}
-          {/* <VenueSection venueDetails={event.VENUE} /> */}
+          <VenueSection venueDetails={event.VENUE} />
 
           {/* Spacer to ensure "BACK" button is reachable */}
-          <View style={{ height: 20 }} />
+          <ThemedView style={{ height: 20 }} />
 
           {/* Back Button */}
-          <View style={styles.buttonContainer}>
+          <ThemedView style={styles.buttonContainer}>
             <TouchableOpacity onPress={() => {
               // Trigger closing animation
               Animated.timing(panY, {
@@ -160,10 +162,10 @@ const EventModal: React.FC<EventModalProps> = ({ visible, event, onClose }) => {
             }} style={styles.backButton}>
               <ThemedText style={styles.buttonText}>BACK</ThemedText>
             </TouchableOpacity>
-          </View>
+          </ThemedView>
         </ScrollView>
       </Animated.View>
-    </View>
+    </ThemedView>
   );
 };
 
@@ -186,12 +188,12 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   modalContent: {
-    backgroundColor: 'gray',
+    backgroundColor: '#fff',
     paddingHorizontal: 20,
     paddingBottom: 20,
     paddingTop: 10,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
+    //borderTopLeftRadius: 10,
+    //borderTopRightRadius: 10,
     width: "100%",
     maxHeight: SCREEN_HEIGHT * 0.75,
   },

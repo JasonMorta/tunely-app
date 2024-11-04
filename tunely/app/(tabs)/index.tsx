@@ -72,6 +72,7 @@ const Index: React.FC = () => {
 
   // Function to open modal and set the selected event
   const openModal = (event: EventData) => {
+    console.log('event💵', event)
     setSelectedEvent(event);
     setModalVisible(true);
   };

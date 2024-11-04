@@ -26,8 +26,8 @@ const EventItem: React.FC<EventItemProps> = ({ event, onPress, onImageError }) =
 
   const date = event.eventDate?.startDay && event.eventDate?.startTime
     ? `${event.eventDate.startDay} `
-    : (event.date?.startDay && event.date?.startTime
-      ? `${event.date.startDay} ${event.date.startTime}`
+    : (event.eventDate?.startDay && event.eventDate?.startTime
+      ? `${event.eventDate.startDay} ${event.eventDate.startTime}`
       : "No Date");
 
   const venueName = event.VENUE?.name || "Not Specified";
@@ -83,10 +83,10 @@ const EventItem: React.FC<EventItemProps> = ({ event, onPress, onImageError }) =
           {description}
         </ThemedText>
         
-        <View style={styles.timeData}>
+        <ThemedText style={styles.timeData}>
           <ThemedText style={styles.eventSubtitle}>2 hours 15min </ThemedText>
           <ThemedText style={styles.eventTime}>30km away</ThemedText>
-        </View>
+        </ThemedText>
       </View>
     </Pressable>
   );
