@@ -18,7 +18,7 @@ import { EventData } from '../../types/EventTypes';
 import { ThemedText } from '../ThemedText';
 import PerformerSection from './PerformerSection';
 import VenueSection from './VenueSection';
-import { Colors, tintColorDark } from '../../constants/Colors';
+import { Colors } from '../../constants/Colors';
 
 interface EventModalProps { 
   visible: boolean;
