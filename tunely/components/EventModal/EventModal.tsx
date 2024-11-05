@@ -10,6 +10,7 @@ import {
   PanResponder,
   Animated,
   Easing,
+  useColorScheme,
 } from 'react-native';
 import { ThemedView } from '../ThemedView';
 import EventSection from './EventSection';
@@ -17,6 +18,7 @@ import { EventData } from '../../types/EventTypes';
 import { ThemedText } from '../ThemedText';
 import PerformerSection from './PerformerSection';
 import VenueSection from './VenueSection';
+import { Colors, tintColorDark } from '../../constants/Colors';
 
 interface EventModalProps { 
   visible: boolean;
@@ -29,6 +31,7 @@ const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 const EventModal: React.FC<EventModalProps> = ({ visible, event, onClose }) => {
   const panY = useRef(new Animated.Value(SCREEN_HEIGHT)).current; // Start off-screen
   const [isVisible, setIsVisible] = useState(visible);
+  const themeColor = useColorScheme() === 'dark' ? Colors.dark.background : Colors.light.background; // Adjusted colors for better visibility
 
   // Reference to prevent multiple animations
   const animationRef = useRef<Animated.CompositeAnimation | null>(null);
@@ -107,9 +110,6 @@ const EventModal: React.FC<EventModalProps> = ({ visible, event, onClose }) => {
     })
   ).current;
 
-  // Venue structure
-  // 
-
   // Prevent rendering when not visible or when event is null
   if (!isVisible || !event) return null;
 
@@ -118,7 +118,10 @@ const EventModal: React.FC<EventModalProps> = ({ visible, event, onClose }) => {
       <Animated.View
         style={[
           styles.modalContent,
-          { transform: [{ translateY: panY }] },
+          { 
+            backgroundColor: themeColor, // Apply themeColor here
+            transform: [{ translateY: panY }] 
+          },
         ]}
       >
         {/* Header with Drag Handle */}
@@ -188,7 +191,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   modalContent: {
-    backgroundColor: '#fff',
+    // Removed backgroundColor from here
     paddingHorizontal: 20,
     paddingBottom: 20,
     paddingTop: 10,

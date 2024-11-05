@@ -50,7 +50,7 @@ const Index: React.FC = () => {
 
         setEvents(fetchedEvents); // Update the state with fetched events
       } else {
-        console.log("No events data available");
+        //console.log("No events data available");
         setEvents([]); // Clear events if none are available
       }
 
@@ -72,7 +72,7 @@ const Index: React.FC = () => {
 
   // Function to open modal and set the selected event
   const openModal = (event: EventData) => {
-    console.log('event💵', event)
+    //console.log('event💵', event)
     setSelectedEvent(event);
     setModalVisible(true);
   };

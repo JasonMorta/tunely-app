@@ -1,5 +1,18 @@
 // src/types/EventTypes.ts
 
+// Venue Opening Hours Interface
+// Example structure: { "Monday": "8 am–12 am", "Tuesday": "8 am–12 am", ... }
+export interface VenueOpeningHours {
+  Monday?: string;
+  Tuesday?: string;
+  Wednesday?: string;
+  Thursday?: string;
+  Friday?: string;
+  Saturday?: string;
+  Sunday?: string;
+  [key: string]: string | undefined; // Add index signature
+}
+
 // Performer Contact Interface
 interface PerformerContact {
   alternativeContact?: {
@@ -53,11 +66,6 @@ interface VenueContact {
   [key: string]: any; // Define specific keys if known
 }
 
-// Venue Opening Hours Interface
-interface VenueOpeningHours {
-  [key: string]: any; // Define specific keys if known
-}
-
 // Venue Social Media Interface
 interface VenueSocialMedia {
   [key: string]: any; // Define specific keys if known
@@ -74,16 +82,15 @@ interface Attending {
   interested: number;
 }
 
-
 // Venue Interface
-interface Venue {
+export interface Venue {
   accessibility?: VenueAccessibility;
   address?: string;
   amenities?: VenueAmenities;
   capacity?: number;
   contact?: VenueContact;
   name?: string;
-  openingHours?: VenueOpeningHours;
+  openingHours?: VenueOpeningHours; // Updated to use the VenueOpeningHours type
   socialMedia?: VenueSocialMedia;
   venueLinks?: VenueLinks;
   images?: [string];
@@ -165,7 +172,7 @@ interface EventVenue {
   amenities?: VenueAmenities;
   capacity?: number;
   name?: string;
-  openingHours?: VenueOpeningHours;
+  openingHours?: VenueOpeningHours; // Updated to use the VenueOpeningHours type
   venueLinks?: VenueLinks;
 }
 

@@ -5,8 +5,9 @@ import { View, StyleSheet, Image } from 'react-native';
 import { ThemedText } from '../ThemedText';
 import { EventData } from '../../types/EventTypes'; // Import the EventData type
 import { ThemedView } from '../ThemedView';
-import locationPin from '../../assets/icons/pin.png';
 import locationTime from '../../assets/icons/clock.png';
+import OpeningHours from './OpeningHours';
+import AddressOptions from './AddressOptions'; // Import the new component
 
 interface VenueSectionProps {
   venueDetails?: EventData['VENUE']; // Make venueDetails optional
@@ -16,42 +17,41 @@ const VenueSection: React.FC<VenueSectionProps> = ({ venueDetails }) => {
   // Check if venueDetails is defined
   if (!venueDetails) {
     return (
-      <View style={styles.container}>
+      <ThemedView style={styles.container}>
         <ThemedText style={styles.venueTitle}>No Venue Information Available</ThemedText>
-      </View>
+      </ThemedView>
     );
   }
 
-  const venueImage = venueDetails?.images && venueDetails.images.length > 0 ? venueDetails.images[0] : null;
-  return (
-   <ThemedView style={styles.container}>
-   
+  const venueImage =
+    venueDetails?.images && venueDetails.images.length > 0
+      ? venueDetails.images[0]
+      : null;
+  const openingHours = venueDetails.openingHours; // Assuming opening hours are stored here
 
-        <ThemedText style={styles.venueTitle}>{venueDetails.name}</ThemedText>
-        {venueImage && (
-        <Image source={{ uri: venueImage }} style={styles.venueImage} />
-      )}
+  return (
+    <ThemedView style={styles.container}>
+      <ThemedText style={styles.venueTitle}>{venueDetails.name}</ThemedText>
+      {venueImage && <Image source={{ uri: venueImage }} style={styles.venueImage} />}
       <ThemedText style={styles.contact}>Contact Details</ThemedText>
 
-      <ThemedView style={styles.locationContainer}>
-      <Image source={locationPin} style={{ width: 20, height: 20 }} />
-      <ThemedText>{venueDetails.address}</ThemedText>
-      </ThemedView>
+      {/* Use AddressOptions Component */}
+      <AddressOptions address={venueDetails.address || 'No address available'} />
 
       <ThemedView style={styles.locationTimes}>
-      <Image source={locationTime} style={{ width: 20, height: 20 }} />
-      <ThemedText>Open and close times</ThemedText>
-      </ThemedView> 
+        <ThemedView style={styles.timeHeading}>
+          <Image source={locationTime} style={{ width: 20, height: 20 }} />
+          <ThemedText>Open and close times</ThemedText>
+        </ThemedView>
+        {openingHours && <OpeningHours dates={openingHours} />}
+      </ThemedView>
 
       {/* Venue social media links */}
       <ThemedView style={styles.locationSocialLinks}>
         <ThemedText>Follow us on:</ThemedText>
         {/* Add social media icons here */}
-      
       </ThemedView>
-
-    
-   </ThemedView>
+    </ThemedView>
   );
 };
 
@@ -59,12 +59,14 @@ const styles = StyleSheet.create({
   container: {
     marginBottom: 15,
     marginTop: 15,
+    paddingHorizontal: 16, // Added padding for better layout
   },
   venueTitle: {
     fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'center',
     marginVertical: 10,
+    lineHeight: 40,
   },
   venueImage: {
     width: '100%',
@@ -77,24 +79,22 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginVertical: 5,
   },
-  locationContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-    marginVertical: 10,
-  },
   locationTimes: {
+    flexDirection: 'column',
     marginVertical: 10,
+    gap: 10,
+  },
+  timeHeading: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
   },
-  locationSocialLinks:{
+  locationSocialLinks: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
     marginVertical: 10,
-  }
+  },
 });
 
 export default VenueSection;
