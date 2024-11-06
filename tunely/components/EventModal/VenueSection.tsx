@@ -36,7 +36,7 @@ const VenueSection: React.FC<VenueSectionProps> = ({ venueDetails }) => {
       <ThemedText style={styles.contact}>Contact Details</ThemedText>
 
       {/* Use AddressOptions Component */}
-      <AddressOptions address={venueDetails.address || 'No address available'} />
+      <AddressOptions address={venueDetails.address || 'No address available'} source={"venue"} />
 
       <ThemedView style={styles.locationTimes}>
         <ThemedView style={styles.timeHeading}>

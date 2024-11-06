@@ -1,4 +1,3 @@
-import { View, Text } from 'react-native'
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import React, { useEffect } from 'react'
 import { Stack } from 'expo-router'

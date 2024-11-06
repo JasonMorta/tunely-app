@@ -1,29 +1,28 @@
 // AddressOptions.tsx
 
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
   StyleSheet,
   Image,
   TouchableOpacity,
-  Modal,
   Alert,
   Platform,
-  TouchableWithoutFeedback,
+  ActionSheetIOS,
+  Clipboard,
+  Linking,
 } from 'react-native';
 import { ThemedText } from '../ThemedText';
 import locationPin from '../../assets/icons/pin.png';
-import * as Clipboard from 'expo-clipboard';
-import { Linking } from 'react-native';
 import { ThemedView } from '../ThemedView';
+import GoogleMapsIcon from '../../assets/icons/map.png';
 
 interface AddressOptionsProps {
   address: string;
+  source: string
 }
 
-const AddressOptions: React.FC<AddressOptionsProps> = ({ address }) => {
-  const [modalVisible, setModalVisible] = useState(false);
-
+const AddressOptions: React.FC<AddressOptionsProps> = ({ address, source }) => {
   // Function to open Google Maps
   const openGoogleMaps = async () => {
     const url = Platform.select({
@@ -31,11 +30,8 @@ const AddressOptions: React.FC<AddressOptionsProps> = ({ address }) => {
       android: `geo:0,0?q=${encodeURIComponent(address)}`,
     });
 
-    console.log('Google Maps URL:', url);
-
     if (url) {
       const supported = await Linking.canOpenURL(url);
-      console.log('Can open Google Maps:', supported);
       if (supported) {
         await Linking.openURL(url);
       } else {
@@ -74,54 +70,67 @@ const AddressOptions: React.FC<AddressOptionsProps> = ({ address }) => {
     Alert.alert('Success', 'Address copied to clipboard.');
   };
 
-  return (
-    <ThemedView>
-      <TouchableOpacity
-        style={styles.container}
-        onPress={() => setModalVisible(true)}
-      >
-        <Image source={locationPin} style={styles.icon} />
-        <ThemedText>{address}</ThemedText>
-      </TouchableOpacity>
+  // Function to show options
+  const showOptions = () => {
+    if (Platform.OS === 'ios') {
+      ActionSheetIOS.showActionSheetWithOptions(
+        {
+          options: ['Cancel', 'Open in Google Maps', 'Open in Apple Maps', 'Copy Address'],
+          cancelButtonIndex: 0,
+        },
+        (buttonIndex) => {
+          switch (buttonIndex) {
+            case 1:
+              openGoogleMaps();
+              break;
+            case 2:
+              openAppleMaps();
+              break;
+            case 3:
+              copyAddress();
+              break;
+            default:
+              break;
+          }
+        }
+      );
+    } else {
+      Alert.alert(
+        'Choose an option',
+        '',
+        [
+          { text: 'Open in Google Maps', onPress: openGoogleMaps },
+          { text: 'Open in Apple Maps', onPress: openAppleMaps },
+          { text: 'Copy Address', onPress: copyAddress },
+          { text: 'Cancel', style: 'cancel' },
+        ],
+        { cancelable: true }
+      );
+    }
+  };
 
-      {/* Modal for options */}
-      <Modal
-        transparent={true}
-        animationType="slide"
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
-          <ThemedView style={styles.modalOverlay}>
-            <TouchableWithoutFeedback>
-              <ThemedView style={styles.modalContent}>
-                <ThemedText style={styles.modalTitle}>Choose an option</ThemedText>
+  if (source === 'venue') {
+    return (
+      <ThemedView>
+        <TouchableOpacity style={styles.container} onPress={showOptions}>
+          <Image source={locationPin} style={styles.icon} />
+          <ThemedText>{address}</ThemedText>
+        </TouchableOpacity>
+      </ThemedView>
+    );
+  };
 
-                <TouchableOpacity style={styles.modalButton} onPress={openGoogleMaps}>
-                  <ThemedText>Open in Google Maps</ThemedText>
-                </TouchableOpacity>
+  if (source === 'performer') {
+    return (
+      <ThemedView >
+      <TouchableOpacity style={styles.container} onPress={showOptions}>
+          <Image source={GoogleMapsIcon} style={styles.performerIcon} />
+          </TouchableOpacity>
+      </ThemedView>
+    );
+  };
 
-                <TouchableOpacity style={styles.modalButton} onPress={openAppleMaps}>
-                  <ThemedText>Open in Apple Maps</ThemedText>
-                </TouchableOpacity>
 
-                <TouchableOpacity style={styles.modalButton} onPress={copyAddress}>
-                  <ThemedText>Copy Address</ThemedText>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  style={[styles.modalButton, styles.cancelButton]}
-                  onPress={() => setModalVisible(false)}
-                >
-                  <ThemedText style={styles.cancelText}>Cancel</ThemedText>
-                </TouchableOpacity>
-              </ThemedView>
-            </TouchableWithoutFeedback>
-          </ThemedView>
-        </TouchableWithoutFeedback>
-      </Modal>
-    </ThemedView>
-  );
 };
 
 const styles = StyleSheet.create({
@@ -135,38 +144,9 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
   },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContent: {
-    width: '80%',
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 20,
-    elevation: 5,
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  modalButton: {
-    paddingVertical: 12,
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    borderColor: '#eee',
-  },
-  cancelButton: {
-    marginTop: 10,
-    borderTopWidth: 1,
-    borderColor: '#ccc',
-  },
-  cancelText: {
-    color: 'red',
+  performerIcon: {
+    width: 40,
+    height: 40,
   },
 });
 

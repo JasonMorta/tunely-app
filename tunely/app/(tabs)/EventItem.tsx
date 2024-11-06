@@ -22,7 +22,9 @@ const EventItem: React.FC<EventItemProps> = ({ event, onPress, onImageError }) =
   const styles = getStyles(colorScheme);
 
   // Safely access nested properties with fallback values
-  const performerName = event.PERFORMER?.name || "Unknown Performer";
+  const performerN = event.PERFORMER?.name || "Unknown Performer";
+  // convert name to have first letter in uppercase of each word
+  const performerName = performerN.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
 
   const date = event.eventDate?.startDay && event.eventDate?.startTime
     ? `${event.eventDate.startDay} `
@@ -50,7 +52,7 @@ const EventItem: React.FC<EventItemProps> = ({ event, onPress, onImageError }) =
 
   return (
     <Pressable style={styles.eventItem} onPress={onPress}>
-      <View style={styles.imageContainer}>
+      <ThemedView style={styles.imageContainer}>
         <Image
           source={placeholderImage}
           style={styles.eventImage}
@@ -68,8 +70,8 @@ const EventItem: React.FC<EventItemProps> = ({ event, onPress, onImageError }) =
         {imageLoading && (
           <ActivityIndicator style={styles.activityIndicator} size="small" color={primaryColor} />
         )}
-      </View>
-      <View style={styles.eventDetails}>
+      </ThemedView>
+      <ThemedView style={styles.eventDetails}>
         <ThemedText style={styles.eventTitle}>{performerName}</ThemedText>
         <ThemedText style={styles.eventVenueName}>{`${venueName} `}</ThemedText>
         <ThemedText style={styles.eventPrice}>{`Cost: ${eventCost} `}</ThemedText>
@@ -83,11 +85,11 @@ const EventItem: React.FC<EventItemProps> = ({ event, onPress, onImageError }) =
           {description}
         </ThemedText>
         
-        <ThemedText style={styles.timeData}>
+        <ThemedView style={styles.timeData}>
           <ThemedText style={styles.eventSubtitle}>2 hours 15min </ThemedText>
           <ThemedText style={styles.eventTime}>30km away</ThemedText>
-        </ThemedText>
-      </View>
+        </ThemedView>
+      </ThemedView>
     </Pressable>
   );
 };
@@ -167,6 +169,7 @@ const getStyles = (colorScheme: any) => StyleSheet.create({
   },
   timeData: {
     marginTop: 'auto',
+    width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -183,7 +186,7 @@ const getStyles = (colorScheme: any) => StyleSheet.create({
   eventDescription: {
     fontSize: 13,
     color: colorScheme === 'dark' ? '#dddddd' : '#777777',
-    marginTop: 4,
+    marginTop: 1,
     lineHeight: 15,
   },
 });

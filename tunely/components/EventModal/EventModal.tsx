@@ -119,7 +119,7 @@ const EventModal: React.FC<EventModalProps> = ({ visible, event, onClose }) => {
         style={[
           styles.modalContent,
           { 
-            backgroundColor: themeColor, // Apply themeColor here
+            backgroundColor: themeColor, //{themeColor} Apply themeColor here
             transform: [{ translateY: panY }] 
           },
         ]}
@@ -187,31 +187,36 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: -2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
+    
     // Elevation for Android
     elevation: 5,
   },
   modalContent: {
     // Removed backgroundColor from here
-    paddingHorizontal: 20,
-    paddingBottom: 20,
-    paddingTop: 10,
-    //borderTopLeftRadius: 10,
-    //borderTopRightRadius: 10,
+    paddingHorizontal: 0,
+    paddingBottom: 0,
+    paddingTop: 0,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
     width: "100%",
     maxHeight: SCREEN_HEIGHT * 0.75,
   },
   header: {
     alignItems: 'center',
     paddingVertical: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
   },
   dragHandle: {
     width: 40,
     height: 5,
     borderRadius: 2.5,
     backgroundColor: '#ccc',
+   
   },
   scrollViewContent: {
     paddingBottom: 20,
+    paddingHorizontal: 10,
   },
   buttonContainer: {
     marginTop: 20,

@@ -10,10 +10,11 @@ import FacebookIcon from '../../assets/icons/facebook-svgrepo-com.png'; // Updat
 import InstagramIcon from '../../assets/icons/instagram-1-svgrepo-com.png';
 import Twitter from '../../assets/icons/twitter-svgrepo-com.png';
 import YoutubeIcon from '../../assets/icons/youtube-svgrepo-com.png';
-import GoogleMapsIcon from '../../assets/icons/map.png';
+import LinkedIn from '../../assets/icons/linkedin-svgrepo-com.png';
 import LikeFalse from '../../assets/icons/like-false.png';
 import LikeTrue from '../../assets/icons/like-true.png';
 import { ThemedView } from '../ThemedView';
+import AddressOptions from './AddressOptions';
 
 interface EventSectionProps {
   eventDetails: EventData; // Use EventData type for prop
@@ -60,11 +61,9 @@ const PerformerSection: React.FC<EventSectionProps> = ({ eventDetails }) => {
           <Image source={Twitter} style={styles.icon} />
         )}
         {PERFORMER?.socialMedia?.linkedin && (
-          <Image source={GoogleMapsIcon} style={styles.icon} />
+          <Image source={LinkedIn} style={styles.icon} />
         )}
-        {VENUE?.address && (
-          <Image source={GoogleMapsIcon} style={styles.icon} />
-        )}
+        <AddressOptions address={VENUE?.address || 'No address available'} source={"performer"} />
         {/* Like Icon */}
         <TouchableOpacity onPress={toggleLike} style={styles.likeButton}>
           <Image

@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'; // Import Material I
 import { useColorScheme } from '../../hooks/useColorScheme';
 import { Colors, primaryColor } from '../../constants/Colors';
 import React from 'react';
+import { ThemedView } from '../../components/ThemedView';
 
 export default function TabsLayout() {
   const colorScheme = useColorScheme();
@@ -46,7 +47,7 @@ export default function TabsLayout() {
           headerTitle: 'Events',
           // display an image in the header
           headerBackground: () => (
-            <View style={{
+            <ThemedView style={{
               flex: 1,
               justifyContent: 'center',
               alignItems: 'center',
@@ -55,7 +56,7 @@ export default function TabsLayout() {
               overflow: 'visible'
             }}>
 
-            </View>
+            </ThemedView>
           ),
           title: 'Events',
           headerStyle: {
