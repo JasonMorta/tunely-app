@@ -13,6 +13,10 @@ export interface VenueOpeningHours {
   [key: string]: string | undefined; // Add index signature
 }
 
+
+export interface VenueOpeningHours_api {
+  opening_hours: string[];
+}
 // Performer Contact Interface
 interface PerformerContact {
   alternativeContact?: {
@@ -83,6 +87,8 @@ interface Attending {
 }
 
 // Venue Interface
+
+/* geometry:{ lon: "", lat: "", }, */
 export interface Venue {
   accessibility?: VenueAccessibility;
   address?: string;
@@ -91,9 +97,15 @@ export interface Venue {
   contact?: VenueContact;
   name?: string;
   openingHours?: VenueOpeningHours; // Updated to use the VenueOpeningHours type
+  opening_hours?: VenueOpeningHours_api; // Updated to use the VenueOpeningHours type
   socialMedia?: VenueSocialMedia;
   venueLinks?: VenueLinks;
   images?: [string];
+  geometry?: {
+    lon: string;
+    lat: string;
+  };
+
 }
 
 // Event Date Interface

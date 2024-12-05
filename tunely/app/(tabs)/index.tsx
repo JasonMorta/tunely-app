@@ -103,7 +103,7 @@ const Index: React.FC = () => {
               return a.nextOccurrence.getTime() - b.nextOccurrence.getTime();
             });
 
-            console.log('sortedEvents', sortedEvents)
+            //console.log('sortedEvents', sortedEvents)
           setEvents(sortedEvents); // Update the state with sorted events
           
         } else {

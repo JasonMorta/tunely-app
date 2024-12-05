@@ -114,7 +114,7 @@ const AddressOptions: React.FC<AddressOptionsProps> = ({ address, source }) => {
       <ThemedView>
         <TouchableOpacity style={styles.container} onPress={showOptions}>
           <Image source={locationPin} style={styles.icon} />
-          <ThemedText>{address}</ThemedText>
+          <ThemedText style={styles.address} >{address}</ThemedText>
         </TouchableOpacity>
       </ThemedView>
     );
@@ -147,6 +147,11 @@ const styles = StyleSheet.create({
   performerIcon: {
     width: 40,
     height: 40,
+  },
+  address: {
+    fontSize: 12,
+    width: '85%',
+    fontWeight: '500',
   },
 });
 

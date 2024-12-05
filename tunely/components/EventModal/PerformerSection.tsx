@@ -75,7 +75,7 @@ const PerformerSection: React.FC<EventSectionProps> = ({ eventDetails }) => {
       </ThemedView>
 
       {/* Display performer name */}
-      <ThemedText style={styles.performerName}>{PERFORMER?.name}</ThemedText>
+      <ThemedText style={styles.performerName}>{PERFORMER?.name?.split(' ').map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}</ThemedText>
     </ThemedView>
   );
 };
