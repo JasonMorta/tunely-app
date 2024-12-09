@@ -48,7 +48,7 @@ interface PerformerSocialMedia {
 interface Performer {
   contact?: string | PerformerContact;
   email?: string;
-  image?: string;
+  image?: Array<string>;
   name?: string;
   otherLinks?: Record<string, string>;
   performerImage?: string;

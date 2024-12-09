@@ -54,8 +54,11 @@ const EventItem: React.FC<EventItemProps> = ({ event, onPress, onImageError }) =
   // Safely access the event description, with a fallback
   const description = event.description || "No Description";
 
-  // Determine the image URI, prioritizing the performer's image
-  const imageUri = event.PERFORMER?.image || undefined;
+  // Determine the image URI from the second image in the performer image array
+  const imageUrl = Array.isArray(event.PERFORMER?.image) && event.PERFORMER.image.length > 0
+    ? event.PERFORMER.image[0]
+    : undefined; // Fallback to undefined if not available
+
 
   // useEffect hook to calculate and update the time until the event starts
   useEffect(() => {
@@ -166,9 +169,9 @@ const EventItem: React.FC<EventItemProps> = ({ event, onPress, onImageError }) =
     const a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
       Math.cos(toRad(lat1)) *
-        Math.cos(toRad(lat2)) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2);
+      Math.cos(toRad(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
 
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
@@ -201,15 +204,16 @@ const EventItem: React.FC<EventItemProps> = ({ event, onPress, onImageError }) =
           resizeMode="cover"
         />
         {/* Conditional rendering of the event image if no error and image URI is available */}
-        {!imageErrorState && imageUri && imageUri.trim() !== '' && (
+        {!imageErrorState && imageUrl && (
           <Image
-            source={{ uri: imageUri }}
+            source={{ uri: imageUrl }}
             style={[styles.eventImage, imageLoading ? styles.imageLoading : styles.imageLoaded]}
             resizeMode="cover"
             onLoad={handleLoad}
             onError={handleError}
           />
         )}
+
         {/* Activity indicator displayed while the image is loading */}
         {imageLoading && (
           <ActivityIndicator style={styles.activityIndicator} size="small" color={primaryColor} />
@@ -223,16 +227,16 @@ const EventItem: React.FC<EventItemProps> = ({ event, onPress, onImageError }) =
         <ThemedText style={styles.eventVenueName}>{`${venueName} `}</ThemedText>
         {/* Event cost */}
         <ThemedText style={styles.eventPrice}>{`Cost: ${eventCost} `}</ThemedText>
-        
+
         {/* Event description, limited to two lines */}
-        <ThemedText 
-          style={styles.eventDescription} 
-          numberOfLines={2} 
+        <ThemedText
+          style={styles.eventDescription}
+          numberOfLines={2}
           ellipsizeMode="tail"
         >
           {description}
         </ThemedText>
-        
+
         {/* Container for time until event and venue distance */}
         <ThemedView style={styles.timeData}>
           {/* Display time remaining until event starts */}

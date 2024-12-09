@@ -36,11 +36,13 @@ const EventItem: React.FC<EventItemProps> = ({ event, onPress, onImageError }) =
       : "No Date");
 
   const venueName = event.VENUE?.name || event.venue || "No Venue";
-  const venueAddress = event.VENUE?.address  || "No Address";
+  const venueAddress = event.VENUE?.address || "No Address";
   const description = event.description || "No Description";
 
-  // Determine the image URI, prioritizing performerImage over event.image
-  const imageUri = event.PERFORMER?.performerImage || undefined;
+// Determine the image URI from the second image in the performer image array
+const imageUri = Array.isArray(event.PERFORMER?.image) && event.PERFORMER.image.length > 0 
+  ? event.PERFORMER.image[0] 
+  : undefined; // Fallback to undefined if not available
 
   const handleLoad = () => {
     setImageLoading(false);
@@ -60,7 +62,7 @@ const EventItem: React.FC<EventItemProps> = ({ event, onPress, onImageError }) =
           style={styles.eventImage}
           resizeMode="cover"
         />
-        {!imageErrorState && imageUri && imageUri.trim() !== '' && (
+        {!imageErrorState && imageUri && (
           <Image
             source={{ uri: imageUri }}
             style={[styles.eventImage, imageLoading ? styles.imageLoading : styles.imageLoaded]}
@@ -69,6 +71,7 @@ const EventItem: React.FC<EventItemProps> = ({ event, onPress, onImageError }) =
             onError={handleError}
           />
         )}
+
         {imageLoading && (
           <ActivityIndicator style={styles.activityIndicator} size="small" color={primaryColor} />
         )}
@@ -78,8 +81,8 @@ const EventItem: React.FC<EventItemProps> = ({ event, onPress, onImageError }) =
         <ThemedText style={styles.eventVenueName}>{`${venueName} `}</ThemedText>
         <ThemedText style={styles.eventSubtitle}>{`Date: ${date} `} </ThemedText>
         <ThemedText style={styles.eventTime}>{`Time: ${event.eventDate?.startTime} `}</ThemedText>
-        
-      {/*   <ThemedText style={styles.eventDescription} numberOfLines={2}>
+
+        {/*   <ThemedText style={styles.eventDescription} numberOfLines={2}>
           {description}
         </ThemedText> */}
       </View>
@@ -138,7 +141,7 @@ const getStyles = (colorScheme: any) => StyleSheet.create({
     fontSize: 18,
     color: colorScheme === 'dark' ? '#ffffff' : '#000000',
   },
-  eventVenueName:{
+  eventVenueName: {
     fontSize: 14,
     fontWeight: 'bold',
     color: colorScheme === 'dark' ? '#bbbbbb' : '#555555',
@@ -149,7 +152,7 @@ const getStyles = (colorScheme: any) => StyleSheet.create({
     color: colorScheme === 'dark' ? '#bbbbbb' : '#555555',
     marginTop: 2,
   },
-  eventTime:{
+  eventTime: {
     fontSize: 14,
     color: colorScheme === 'dark' ? '#bbbbbb' : '#555555',
     marginTop: 2,
