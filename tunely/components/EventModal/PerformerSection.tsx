@@ -42,7 +42,7 @@ const PerformerSection: React.FC<EventSectionProps> = ({ eventDetails }) => {
         {/* <ThemedText style={styles.title}>Performer</ThemedText> */}
 
       {PERFORMER && PERFORMER.image && (
-        <Image source={{ uri: PERFORMER.image }} style={styles.performerImage} />
+        <Image source={{ uri: PERFORMER.image[0] }} style={styles.performerImage} />
       )}
 
       {/* Render social media icons */}
